@@ -1,3 +1,7 @@
+function __git_is_upstream_configured
+  command git rev-parse --abbrev-ref @"{u}" > /dev/null 2>&1
+end
+
 function __git_prompt
   git_is_repo; or return 1
 
@@ -15,7 +19,7 @@ function __git_prompt
       printf '✲'
     end
 
-    if not git_is_empty; and not git_is_detached_head
+    if __git_is_upstream_configured
       switch (git_ahead)
         case '+'
           printf ' '

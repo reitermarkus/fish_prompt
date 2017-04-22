@@ -15,7 +15,7 @@ function __git_prompt
       printf '✲'
     end
 
-    if not git_is_detached_head
+    if not git_is_empty; and not git_is_detached_head
       switch (git_ahead)
         case '+'
           printf ' '

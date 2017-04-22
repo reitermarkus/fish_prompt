@@ -13,7 +13,7 @@ function fish_prompt -d 'Display the command prompt'
   set_color $fish_color_normal
 
   if set -l ruby_version (ruby_version)
-    set_color cc342d
+    set_color a00
     set -l ruby_icon \uE791 # NerdFonts
     echo -n " ($ruby_icon $ruby_version)"
     set_color $fish_color_normal

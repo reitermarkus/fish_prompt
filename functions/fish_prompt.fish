@@ -1,7 +1,3 @@
-function __git_is_upstream_configured
-  command git rev-parse --abbrev-ref @"{u}" > /dev/null 2>&1
-end
-
 function __git_prompt
   git_is_repo; or return 1
 
@@ -19,23 +15,22 @@ function __git_prompt
       printf '✲'
     end
 
-    if __git_is_upstream_configured
-      switch (git_ahead)
-        case '+'
-          printf ' '
-          set_color 095
-          printf '↑'
-        case '-'
-          printf ' '
-          set_color a00
-          printf '↓'
-        case '±'
-          printf ' '
-          set_color 095
-          printf '↑'
-          set_color a00
-          printf '↓'
-      end
+    set -l git_ahead (git_ahead)
+    switch "$git_ahead"
+      case '+'
+        printf ' '
+        set_color 095
+        printf '↑'
+      case '-'
+        printf ' '
+        set_color a00
+        printf '↓'
+      case '±'
+        printf ' '
+        set_color 095
+        printf '↑'
+        set_color a00
+        printf '↓'
     end
 
     set_color normal

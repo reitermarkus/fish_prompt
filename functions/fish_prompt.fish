@@ -1,5 +1,66 @@
+function __git_operation
+  set -l git_dir $argv[1]
+
+  set -l operation
+  set -l step
+  set -l total
+
+  if test -d $git_dir/rebase-merge
+    set branch (cat $git_dir/rebase-merge/head-name ^/dev/null)
+    set step (cat $git_dir/rebase-merge/msgnum ^/dev/null)
+    set total (cat $git_dir/rebase-merge/end ^/dev/null)
+    if test -f $git_dir/rebase-merge/interactive
+      set operation "rebase-i"
+    else
+      set operation "rebase-m"
+    end
+  else
+    if test -d $git_dir/rebase-apply
+      set step (cat $git_dir/rebase-apply/next ^/dev/null)
+      set total (cat $git_dir/rebase-apply/last ^/dev/null)
+      if test -f $git_dir/rebase-apply/rebasing
+        set branch (cat $git_dir/rebase-apply/head-name ^/dev/null)
+        set operation "rebase"
+      else if test -f $git_dir/rebase-apply/applying
+        set operation "am"
+      else
+        set operation "am/rebase"
+      end
+    else if test -f $git_dir/MERGE_HEAD
+      set operation "merging"
+    else if test -f $git_dir/CHERRY_PICK_HEAD
+      set operation "cherry-picking"
+    else if test -f $git_dir/REVERT_HEAD
+      set operation "reverting"
+    else if test -f $git_dir/BISECT_LOG
+      set operation "bisecting"
+    end
+  end
+
+  if test -n "$step" -a -n "$total"
+    set operation "$operation $step/$total"
+  end
+
+  if test -z "$operation"
+    return 1
+  end
+
+  printf $operation
+end
+
 function __git_prompt
-  git_is_repo; or return 1
+  not command -s git >/dev/null
+  and return 1
+
+  set -l repo_info (command git rev-parse --git-dir --is-inside-git-dir --is-bare-repository --is-inside-work-tree HEAD ^/dev/null)
+
+  test -n "$repo_info"
+  or return
+
+  set -l git_dir $repo_info[1]
+  set -l inside_gitdir $repo_info[2]
+  set -l bare_repo $repo_info[3]
+  set -l inside_worktree $repo_info[4]
 
   if set -l branch_name (git_branch_name)
     set -l branch_symbol \uE0A0
@@ -13,6 +74,10 @@ function __git_prompt
 
     if git_is_dirty
       printf '✲'
+    end
+
+    if set -l operation (__git_operation $git_dir)
+      printf "|$operation"
     end
 
     set -l git_ahead (git_ahead)

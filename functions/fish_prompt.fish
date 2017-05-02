@@ -70,7 +70,19 @@ function __git_prompt
     end
 
     set_color normal $fish_color_git
-    echo -n " ($branch_symbol $branch_name"
+
+    echo -n " ($branch_symbol "
+
+    if test "true" = $inside_gitdir
+      if test "true" = $bare_repo
+        echo -n "bare|"
+      else
+        # Let user know they're inside the git dir of a non-bare repo
+        echo -n ".git|"
+      end
+    end
+
+    echo -n "$branch_name"
 
     if git_is_dirty
       printf '✲'

@@ -1,6 +1,6 @@
 # Solarized
 
-if test $TERM_PROGRAM = Apple_Terminal
+if test "$TERM_PROGRAM" = Apple_Terminal
 
   # List Colors
 

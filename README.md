@@ -3,20 +3,27 @@
 My prompt for Fish Shell.
 
 
-## Install
+## Installation
 
-With [fisherman](https://github.com/fisherman/fisherman)
+With [`fisherman`](https://github.com/fisherman/fisherman):
 
 ```
 fisher reitermarkus/fish_prompt
 ```
 
 
-## Terminal
+## Requirements
 
 You need to use a font from [NerdFonts](http://nerdfonts.com) in order to use the special icons.
 
 
 ## Features
 
+- shows Git status
 - shows Ruby version
+- shows Rust version
+
+
+## Screenshot
+
+![Screenshot](screenshot.png)

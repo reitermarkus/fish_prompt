@@ -136,6 +136,13 @@ function fish_prompt -d 'Display the command prompt'
     set_color $fish_color_normal
   end
 
+  if set -l rust_version (rust_version)
+    set_color 875f5f
+    set -l rust_icon \uE7A8 # NerdFonts
+    echo -n " ($rust_icon $rust_version)"
+    set_color $fish_color_normal
+  end
+
   echo -n ' '
   set_color $fish_color_normal
   not test $last_status -eq 0; and set_color $fish_color_error

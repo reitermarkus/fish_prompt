@@ -6,9 +6,9 @@ function __git_operation
   set -l total
 
   if test -d $git_dir/rebase-merge
-    set branch (cat $git_dir/rebase-merge/head-name ^/dev/null)
-    set step (cat $git_dir/rebase-merge/msgnum ^/dev/null)
-    set total (cat $git_dir/rebase-merge/end ^/dev/null)
+    set branch (cat $git_dir/rebase-merge/head-name 2>/dev/null)
+    set step (cat $git_dir/rebase-merge/msgnum 2>/dev/null)
+    set total (cat $git_dir/rebase-merge/end 2>/dev/null)
     if test -f $git_dir/rebase-merge/interactive
       set operation "rebase-i"
     else
@@ -16,10 +16,10 @@ function __git_operation
     end
   else
     if test -d $git_dir/rebase-apply
-      set step (cat $git_dir/rebase-apply/next ^/dev/null)
-      set total (cat $git_dir/rebase-apply/last ^/dev/null)
+      set step (cat $git_dir/rebase-apply/next 2>/dev/null)
+      set total (cat $git_dir/rebase-apply/last 2>/dev/null)
       if test -f $git_dir/rebase-apply/rebasing
-        set branch (cat $git_dir/rebase-apply/head-name ^/dev/null)
+        set branch (cat $git_dir/rebase-apply/head-name 2>/dev/null)
         set operation "rebase"
       else if test -f $git_dir/rebase-apply/applying
         set operation "am"
@@ -52,7 +52,7 @@ function __git_prompt
   not command -s git >/dev/null
   and return 1
 
-  set -l repo_info (command git rev-parse --git-dir --is-inside-git-dir --is-bare-repository --is-inside-work-tree HEAD ^/dev/null)
+  set -l repo_info (command git rev-parse --git-dir --is-inside-git-dir --is-bare-repository --is-inside-work-tree HEAD 2>/dev/null)
 
   test -n "$repo_info"
   or return

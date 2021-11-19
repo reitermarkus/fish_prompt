@@ -5,7 +5,7 @@ My prompt for Fish Shell.
 
 ## Installation
 
-With [`fisherman`](https://github.com/fisherman/fisherman):
+With [`fisher`](https://github.com/jorgebucaran/fisher):
 
 ```
 fisher add reitermarkus/fish_prompt

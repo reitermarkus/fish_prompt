@@ -8,7 +8,7 @@ My prompt for Fish Shell.
 With [`fisherman`](https://github.com/fisherman/fisherman):
 
 ```
-fisher reitermarkus/fish_prompt
+fisher add reitermarkus/fish_prompt
 ```
 
 

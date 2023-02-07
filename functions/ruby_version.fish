@@ -7,8 +7,8 @@ function ruby_version
         set -l rbenv_version_origin (rbenv version-origin)
 
         if not test "$rbenv_root/version" = "$rbenv_version_origin"
-            printf (rbenv version-name)
-            return 0
+            printf (rbenv version-name 2>/dev/null)
+            return $status
         end
     end
 

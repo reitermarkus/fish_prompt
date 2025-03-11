@@ -128,6 +128,20 @@ function fish_prompt -d 'Display the command prompt'
 
     __git_prompt
 
+    if set -l python_version (python_version)
+        set_color 4584b6
+        set -l python_icon \uE235 # NerdFonts
+        echo -n " ($python_icon $python_version"
+
+        if set -q VIRTUAL_ENV
+          echo -n " $(basename $VIRTUAL_ENV)"
+        end
+
+        echo -n ")"
+
+        set_color $fish_color_normal
+    end
+
     if set -l ruby_version (ruby_version)
         set_color a00
         set -l ruby_icon \uE791 # NerdFonts
